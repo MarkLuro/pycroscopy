@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycroscopy.processing.giv_utils &mdash; pycroscopy 0.59.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../../about.html"/>
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="pycroscopy 0.59.2 documentation" href="../../index.html"/>
+        <link rel="up" title="pycroscopy.processing" href="../pycroscopy.processing.html"/>
+        <link rel="next" title="pycroscopy.processing.gmode_utils" href="pycroscopy.processing.gmode_utils.html"/>
+        <link rel="prev" title="pycroscopy.processing.fft" href="pycroscopy.processing.fft.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pycroscopy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.59.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">Pycroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../whats_new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_format.html">Pycroscopy Data and File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../papers_conferences.html">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Pycroscopy Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#developer-tutorials">Developer Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#pycroscopy-publications">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#user-tutorials">User Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contact.html">Contact us</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#package-structure">Package Structure</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../api.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.analysis.html">pycroscopy.analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.io.html">pycroscopy.io</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../pycroscopy.processing.html">pycroscopy.processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.viz.html">pycroscopy.viz</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.analysis.html">pycroscopy.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.io.html">pycroscopy.io</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../pycroscopy.processing.html">pycroscopy.processing</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../pycroscopy.processing.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.tests.html">pycroscopy.tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.viz.html">pycroscopy.viz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pycroscopy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../pycroscopy.processing.html">pycroscopy.processing</a> &raquo;</li>
+        
+      <li>pycroscopy.processing.giv_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/_autosummary/_autosummary/pycroscopy.processing.giv_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pycroscopy.processing.giv_utils">
+<span id="pycroscopy-processing-giv-utils"></span><h1>pycroscopy.processing.giv_utils<a class="headerlink" href="#module-pycroscopy.processing.giv_utils" title="Permalink to this headline">¶</a></h1>
+<p>Created on Thu Jan 12 15:31:55 2017</p>
+<p>&#64;author: Suhas Somnath, Kody Law, Rama K. Vasudevan</p>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pycroscopy.processing.giv_utils.bayesian_inference_on_period" title="pycroscopy.processing.giv_utils.bayesian_inference_on_period"><code class="xref py py-obj docutils literal"><span class="pre">bayesian_inference_on_period</span></code></a>(i_meas,&nbsp;…[,&nbsp;…])</td>
+<td>Performs Bayesian Inference on a single I-V curve.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pycroscopy.processing.giv_utils.do_bayesian_inference" title="pycroscopy.processing.giv_utils.do_bayesian_inference"><code class="xref py py-obj docutils literal"><span class="pre">do_bayesian_inference</span></code></a>(i_meas,&nbsp;bias,&nbsp;freq[,&nbsp;…])</td>
+<td>this function accepts a Voltage vector and current vector</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pycroscopy.processing.giv_utils.plot_bayesian_results" title="pycroscopy.processing.giv_utils.plot_bayesian_results"><code class="xref py py-obj docutils literal"><span class="pre">plot_bayesian_results</span></code></a>(bias_sine,&nbsp;i_meas,&nbsp;…)</td>
+<td>Plots the basic Bayesian Inference results for a specific pixel</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pycroscopy.processing.giv_utils.plot_bayesian_spot_from_h5" title="pycroscopy.processing.giv_utils.plot_bayesian_spot_from_h5"><code class="xref py py-obj docutils literal"><span class="pre">plot_bayesian_spot_from_h5</span></code></a>(h5_bayesian_grp,&nbsp;…)</td>
+<td>Plots the basic Bayesian Inference results for a specific pixel</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="pycroscopy.processing.giv_utils.bayesian_inference_on_period">
+<code class="descname">bayesian_inference_on_period</code><span class="sig-paren">(</span><em>i_meas</em>, <em>excit_wfm</em>, <em>ex_freq</em>, <em>r_extra=110</em>, <em>num_x_steps=500</em>, <em>show_plots=False</em>, <em>r_max=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/giv_utils.html#bayesian_inference_on_period"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.giv_utils.bayesian_inference_on_period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs Bayesian Inference on a single I-V curve.
+The excitation waveform must be a single period of a sine wave.
+This algorithm splits the curve into the forward and reverse sections, performs inference on each of the sections,
+stitches the results back again, and corrects the resistance which is not handled in the main bayesian function.
+:param i_meas: Current corresponding to a single period of sinusoidal excitation bias
+:type i_meas: array-like
+:param excit_wfm: Single period of the sinusoidal excitation waveform
+:type excit_wfm: array-like
+:param ex_freq: Frequency of the excitation waveform
+:type ex_freq: float
+:param r_extra: Extra resistance in the RC circuit that will provide correct current and resistance values
+:type r_extra: float (Optional, default = 220 [Ohms])
+:param num_x_steps: Number of steps for the inferred results. Note: this may be different from what is specified.
+:type num_x_steps: uint (Optional, default = 500)
+:param show_plots: Whether or not to show plots
+:type show_plots: Boolean (Optional, Default = False)
+:param r_max: Maximum limit of the resistance plots.
+:type r_max: float (Optional, Default = None)
+:param kwargs: Other parameters that will be passed on to the do_bayesian_inference function
+:type kwargs: dict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>results</strong> – Dictionary iterms are
+‘cValue’ : array-like - 2 elements<blockquote>
+<div>Capacitance on the forward and reverse sections</div></blockquote>
+<dl class="docutils">
+<dt>’x’ <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>Interpolated bias from bayesian inference of length num_x_steps</dd>
+<dt>’mR’ <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>Resistance of sample infered by Bayesian Inference of length num_x_steps</dd>
+<dt>’vR’ <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>Variance of the inferred resistance of length num_x_steps</dd>
+<dt>’IcorrSine’ <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>Measured current with the capacitance correctly subtracted.</dd>
+<dt>’Irec’ <span class="classifier-delimiter">:</span> <span class="classifier">array-like</span></dt>
+<dd>Current reconstructed via Bayesian Inference</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.giv_utils.do_bayesian_inference">
+<code class="descname">do_bayesian_inference</code><span class="sig-paren">(</span><em>i_meas</em>, <em>bias</em>, <em>freq</em>, <em>num_x_steps=251</em>, <em>r_extra=110</em>, <em>gam=0.03</em>, <em>e=10.0</em>, <em>sigma=10.0</em>, <em>sigmaC=1.0</em>, <em>num_samples=2000.0</em>, <em>show_plots=False</em>, <em>econ=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/giv_utils.html#do_bayesian_inference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.giv_utils.do_bayesian_inference" title="Permalink to this definition">¶</a></dt>
+<dd><p>this function accepts a Voltage vector and current vector
+and returns a Bayesian inferred result for R(V) and capacitance
+Used for solving the situation I = V/R(V) + CdV/dt
+to recover R(V) and C, where C is constant.
+:param i_meas: current values, should be in nA
+:type i_meas: 1D array or list
+:param bias: voltage values
+:type bias: 1D array or list
+:param freq: frequency of applied waveform
+:type freq: float
+:param num_x_steps: Number of steps in x vector (interpolating V)
+:type num_x_steps: unsigned int (Optional, Default = 251)
+:param r_extra: Extra resistance in the RC circuit that will provide correct current and resistance values
+:type r_extra: float (Optional, default = 220 [Ohms])
+:param gam: gamma value for reconstruction
+:type gam: float (Optional, Default = 0.03)
+:param e: Ask Kody
+:type e: float (Optional, Default = 10.0)
+:param sigma: Ask Kody
+:type sigma: float (Optional, Default = 10.0)
+:param sigmaC: Ask Kody
+:type sigmaC: float (Optional, Default = 1.0)
+:param num_samples: Number of samples. 1E+4 is more than sufficient
+:type num_samples: unsigned int (Optional, Default = 1E4)
+:param show_plots: Whether or not to show plots
+:type show_plots: Boolean (Optional, Default = False)
+:param econ: Whether or not extra datasets are returned. Turn this on when running on multiple datasets
+:type econ: Boolean (Optional, Default = False)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>results_dict</strong> (<em>Dictionary</em>) – Dictionary iterms are
+‘x’ : 1D float array.  Voltage vector interpolated with num_samples number of points
+‘m’ : Ask Kody
+‘mR’ : 1D float array.  Bayesian inference of the resistance. This is the one you want
+‘vR’ : 2D float array.  varaiance ? of inferred resistance
+‘Irec’ : 1D array or float.  Reconstructed current without capacitance
+‘Sigma’ : Ask Kody
+‘cValue’ : float.  Capacitance value
+‘m2R’ : Ask Kody
+‘SI’ : Ask Kody</li>
+<li><em>Written by Kody J. Law (Matlab) and translated to Python by Rama K. Vasudevan</em></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.giv_utils.plot_bayesian_results">
+<code class="descname">plot_bayesian_results</code><span class="sig-paren">(</span><em>bias_sine, i_meas, i_corrected, bias_triang, resistance, r_variance, i_recon=None, pix_pos=[0, 0], broken_resistance=True, r_max=None, res_scatter=False, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/giv_utils.html#plot_bayesian_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.giv_utils.plot_bayesian_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the basic Bayesian Inference results for a specific pixel
+:param bias_sine: Original bias vector used for experiment
+:type bias_sine: 1D float numpy array
+:param i_meas: Current measured from experiment
+:type i_meas: 1D float numpy array
+:param i_corrected: current with capacitance and R extra compensated
+:type i_corrected: 1D float numpy array
+:param i_recon: Reconstructed current
+:type i_recon: 1D float numpy array
+:param bias_triang: Interpolated bias
+:type bias_triang: 1D float numpy array
+:param resistance: Inferred resistance
+:type resistance: 1D float numpy array
+:param r_variance: Variance of the resistance
+:type r_variance: 1D float numpy array
+:param pix_pos: Pixel row and column positions or values
+:type pix_pos: list of two numbers
+:param broken_resistance: Whether or not to break the resistance plots into sections so as to avoid plotting areas with high variance
+:type broken_resistance: bool, Optional
+:param r_max: Maximum value of resistance to plot
+:type r_max: float, Optional
+:param res_scatter: Use scatter instead of line plots for resistance
+:type res_scatter: bool, Optional</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fig</strong> – Handle to figure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">matplotlib.pyplot figure handle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.giv_utils.plot_bayesian_spot_from_h5">
+<code class="descname">plot_bayesian_spot_from_h5</code><span class="sig-paren">(</span><em>h5_bayesian_grp</em>, <em>h5_resh</em>, <em>pix_ind</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/giv_utils.html#plot_bayesian_spot_from_h5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.giv_utils.plot_bayesian_spot_from_h5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the basic Bayesian Inference results for a specific pixel
+:param h5_bayesian_grp: Group containing the Bayesian Inference results
+:type h5_bayesian_grp: h5py.Datagroup reference
+:param h5_resh: Dataset containing the raw / filtered measured current split by pixel
+:type h5_resh: h5py.Dataset reference
+:param pix_ind: Integer index of the desired pixel
+:type pix_ind: unsigned int</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fig</strong> – Handle to figure</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">matplotlib.pyplot figure handle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pycroscopy.processing.gmode_utils.html" class="btn btn-neutral float-right" title="pycroscopy.processing.gmode_utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pycroscopy.processing.fft.html" class="btn btn-neutral" title="pycroscopy.processing.fft" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Suhas Somnath, Chris Smith, Stephen Jesse, Numan Laanait.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.59.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

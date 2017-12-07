@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pycroscopy &mdash; pycroscopy 0.59.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="#"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="pycroscopy 0.59.2 documentation" href="index.html"/>
+        <link rel="next" title="Getting Started" href="getting_started.html"/>
+        <link rel="prev" title="Pycroscopy" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pycroscopy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.59.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pycroscopy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what">What?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#who">Who?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how">How?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="whats_new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_format.html">Pycroscopy Data and File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="papers_conferences.html">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Pycroscopy Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#developer-tutorials">Developer Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#pycroscopy-publications">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html#user-tutorials">User Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pycroscopy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Pycroscopy</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/about.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pycroscopy">
+<h1>Pycroscopy<a class="headerlink" href="#pycroscopy" title="Permalink to this headline">¶</a></h1>
+<p><strong>Scientific analysis of nanoscale materials imaging data</strong></p>
+<div class="section" id="what">
+<h2>What?<a class="headerlink" href="#what" title="Permalink to this headline">¶</a></h2>
+<p>pycroscopy is a <a class="reference external" href="http://www.python.org/">python</a> package for image processing and scientific analysis of imaging modalities such as multi-frequency scanning probe microscopy, scanning tunneling spectroscopy, x-ray diffraction microscopy, and transmission electron microscopy. pycroscopy uses a data-centric model wherein the raw data collected from the microscope, results from analysis and processing routines are all written to standardized hierarchical data format (HDF5) files for traceability, reproducibility, and provenance.</p>
+<dl class="docutils">
+<dt>With  pycroscopy we aim to:</dt>
+<dd><ol class="first last arabic simple">
+<li>Serve as a hub for collaboration across scientific domains (microscopists, material scientists, biologists…)</li>
+<li>provide a community-developed, open standard for data formatting</li>
+<li>provide a framework for developing data analysis routines</li>
+<li>significantly lower the barrier to advanced data analysis procedures by simplifying I/O, processing, visualization, etc.</li>
+</ol>
+</dd>
+</dl>
+<p>To learn more about the motivation, general structure, and philosophy of pycroscopy, please read this <a class="reference external" href="https://github.com/pycroscopy/pycroscopy/blob/master/docs/pycroscopy_2017_07_11.pdf">short introduction</a>.</p>
+</div>
+<div class="section" id="who">
+<h2>Who?<a class="headerlink" href="#who" title="Permalink to this headline">¶</a></h2>
+<p>This project begun largely as an effort by scientists and engineers at the <strong>C</strong>enter for <strong>N</strong>anophase
+<strong>M</strong>aterials <strong>S</strong>ciences (<a class="reference external" href="https://www.ornl.gov/facility/cnms">CNMS</a>) to implement a python library
+that can support the I/O, processing, and analysis of the gargantuan stream of images that their microscopes
+generate (thanks to the large CNMS users community!).</p>
+<p>By sharing our methodology and code for analyzing materials imaging we hope that it will benefit the wider
+community of materials science/physics. We also hope, quite ardently, that other materials scientists would
+follow suit.</p>
+<p><strong>The (core) pycroscopy team:</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ssomnath">&#64;ssomnath</a> (Suhas Somnath),</li>
+<li><a class="reference external" href="https://github.com/CompPhysChris">&#64;CompPhysChris</a> (Chris R. Smith),</li>
+<li><a class="reference external" href="https://github.com/nlaanait">&#64;nlaanait</a> (Numan Laanait),</li>
+<li><a class="reference external" href="https://github.com/stephenjesse">&#64;stephenjesse</a> (Stephen Jesse)</li>
+<li>and many more…</li>
+</ul>
+</div>
+<div class="section" id="why">
+<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p>There is that little thing called open science…</p>
+<p>As we see it, there are a few  opportunities in microscopy / imaging and materials science:</p>
+<dl class="docutils">
+<dt><strong>1. Growing data sizes</strong></dt>
+<dd><ul class="first last simple">
+<li>Cannot use desktop computers for analysis</li>
+<li><em>Need: High performance computing, storage resources and compatible, scalable file structures</em></li>
+</ul>
+</dd>
+<dt><strong>2. Increasing data complexity</strong></dt>
+<dd><ul class="first last simple">
+<li>Sophisticated imaging and spectroscopy modes resulting in 5,6,7… dimensional data</li>
+<li><em>Need: Robust software and generalized data formatting</em></li>
+</ul>
+</dd>
+<dt><strong>3. Multiple file formats</strong></dt>
+<dd><ul class="first last simple">
+<li>Different formats from each instrument. Proprietary in most cases</li>
+<li>Incompatible for correlation</li>
+<li><em>Need: Open, instrument independent data format</em></li>
+</ul>
+</dd>
+<dt><strong>4. Disjoint communities</strong></dt>
+<dd><ul class="first last simple">
+<li>Similar analysis routines written by each community (SPM, STEM, TOF SIMs, XRD…) <em>independently</em>!</li>
+<li><em>Need: Centralized repository, instrument agonistic analysis routines that bring communities together</em></li>
+</ul>
+</dd>
+<dt><strong>5. Expensive analysis software</strong></dt>
+<dd><ul class="first last simple">
+<li>Software supplied with instruments often insufficient / incapable of custom analysis routines</li>
+<li>Commercial software (Eg: Matlab, Origin..) are often prohibitively expensive.</li>
+<li><em>Need: Free, powerful, open souce, user-friendly software</em></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="how">
+<h2>How?<a class="headerlink" href="#how" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>pycroscopy uses an <strong>instrument agnostic data structure</strong> that facilitates the storage of data, regardless
+of dimensionality (conventional 2D images to 9D multispectral SPM datasets) or instrument of origin (AFMs,
+STMs, STEMs, TOF SIMS, and many more).</li>
+<li>This general defenition of data allows us to write a single and
+generalized version of analysis and processing functions that can be applied to any kind of data.</li>
+<li>The data is stored in <a class="reference external" href="http://extremecomputingtraining.anl.gov/files/2015/03/HDF5-Intro-aug7-130.pdf">heirarchical
+data format (HDF5)</a>
+files which:<ul>
+<li>Allow easy and open acceess to data from any programming language.</li>
+<li>Accomodate datasets ranging from kilobytes (kB) to petabytes (pB)</li>
+<li>Are readily compaible with supercomputers and support parallel I/O</li>
+<li>Allows storage of relevant parameters along with data for improved traceability and reproducability of
+analysis</li>
+</ul>
+</li>
+<li>Scientific workflows are developed and disseminated through <a class="reference external" href="http://jupyter.org/">jupyter notebooks</a>
+that are interactive and portable web applications containing, text, images, code / scripts, and text-based
+and graphical results</li>
+<li>Once a user converts their microscope’s data format into a HDF5 format, by simply extending some of the
+classes in `io`, the user gains access to the rest of the utilities present in <cite>pycroscopy.*</cite>.</li>
+</ul>
+</div>
+<div class="section" id="package-structure">
+<h2>Package Structure<a class="headerlink" href="#package-structure" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>The package structure is simple, with 4 main modules:</dt>
+<dd><ol class="first last arabic simple">
+<li><strong>io</strong>: Reading and writing to HDF5 files + translating data from custom &amp; proprietary microscope formats to HDF5.</li>
+<li><strong>processing</strong>: multivariate statistics, machine Learning, and signal filtering.</li>
+<li><strong>analysis</strong>: model-dependent analysis of information.</li>
+<li><strong>viz</strong>: Plotting functions and interactive jupyter widgets to visualize multidimenional data</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>Besides the packages used in pycroscopy, we would like to thank the developers of the following software
+packages:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.python.org">Python</a></li>
+<li><a class="reference external" href="https://www.continuum.io/anaconda-overview">Anaconda Python</a></li>
+<li><a class="reference external" href="http://jupyter.org/">jupyter</a></li>
+<li><a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm</a></li>
+<li><a class="reference external" href="https://www.gitkraken.com/">GitKraken</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Pycroscopy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Suhas Somnath, Chris Smith, Stephen Jesse, Numan Laanait.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.59.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycroscopy.processing.process &mdash; pycroscopy 0.59.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../../about.html"/>
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="pycroscopy 0.59.2 documentation" href="../../index.html"/>
+        <link rel="up" title="pycroscopy.processing" href="../pycroscopy.processing.html"/>
+        <link rel="next" title="pycroscopy.processing.svd_utils" href="pycroscopy.processing.svd_utils.html"/>
+        <link rel="prev" title="pycroscopy.processing.proc_utils" href="pycroscopy.processing.proc_utils.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pycroscopy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.59.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">Pycroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../whats_new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_format.html">Pycroscopy Data and File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../papers_conferences.html">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Pycroscopy Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#developer-tutorials">Developer Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#pycroscopy-publications">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html#user-tutorials">User Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contact.html">Contact us</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#package-structure">Package Structure</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../api.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.analysis.html">pycroscopy.analysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.io.html">pycroscopy.io</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../pycroscopy.processing.html">pycroscopy.processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pycroscopy.viz.html">pycroscopy.viz</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.analysis.html">pycroscopy.analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.io.html">pycroscopy.io</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../pycroscopy.processing.html">pycroscopy.processing</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../pycroscopy.processing.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.tests.html">pycroscopy.tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pycroscopy.viz.html">pycroscopy.viz</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pycroscopy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api.html">API Reference</a> &raquo;</li>
+        
+          <li><a href="../pycroscopy.processing.html">pycroscopy.processing</a> &raquo;</li>
+        
+      <li>pycroscopy.processing.process</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/_autosummary/_autosummary/pycroscopy.processing.process.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pycroscopy.processing.process">
+<span id="pycroscopy-processing-process"></span><h1>pycroscopy.processing.process<a class="headerlink" href="#module-pycroscopy.processing.process" title="Permalink to this headline">¶</a></h1>
+<p>Created on 7/17/16 10:08 AM
+&#64;author: Suhas Somnath, Chris Smith</p>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pycroscopy.processing.process.calc_func" title="pycroscopy.processing.process.calc_func"><code class="xref py py-obj docutils literal"><span class="pre">calc_func</span></code></a>(some_func,&nbsp;args)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param some_func:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pycroscopy.processing.process.parallel_compute" title="pycroscopy.processing.process.parallel_compute"><code class="xref py py-obj docutils literal"><span class="pre">parallel_compute</span></code></a>(data,&nbsp;func[,&nbsp;cores,&nbsp;…])</td>
+<td>Computes the guess function using multiple cores</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pycroscopy.processing.process.setup_func" title="pycroscopy.processing.process.setup_func"><code class="xref py py-obj docutils literal"><span class="pre">setup_func</span></code></a>(args)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param args:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pycroscopy.processing.process.Process" title="pycroscopy.processing.process.Process"><code class="xref py py-obj docutils literal"><span class="pre">Process</span></code></a>(h5_main[,&nbsp;cores,&nbsp;max_mem_mb,&nbsp;verbose])</td>
+<td>Encapsulates the typical steps performed when applying a processing function to  a dataset.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="pycroscopy.processing.process.Process">
+<em class="property">class </em><code class="descname">Process</code><span class="sig-paren">(</span><em>h5_main</em>, <em>cores=None</em>, <em>max_mem_mb=4096</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/process.html#Process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.process.Process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encapsulates the typical steps performed when applying a processing function to  a dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>h5_main</strong> (<em>h5py.Dataset instance</em>) – The dataset over which the analysis will be performed. This dataset should be linked to the spectroscopic
+indices and values, and position indices and values datasets.</li>
+<li><strong>cores</strong> (<em>uint</em><em>, </em><em>optional</em>) – Default - all available cores - 2
+How many cores to use for the computation</li>
+<li><strong>max_mem_mb</strong> (<em>uint</em><em>, </em><em>optional</em>) – How much memory to use for the computation.  Default 1024 Mb</li>
+<li><strong>verbose</strong> (<em>Boolean</em><em>, </em><em>(</em><em>Optional</em><em>, </em><em>default = False</em><em>)</em>) – Whether or not to print debugging statements</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pycroscopy.processing.process.Process.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/process.html#Process.compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.process.Process.compute" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kwargs</strong> – <dl class="docutils">
+<dt>processors: int</dt>
+<dd>number of processors to use. Default all processors on the system except for 1.</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.process.calc_func">
+<code class="descname">calc_func</code><span class="sig-paren">(</span><em>some_func</em>, <em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/process.html#calc_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.process.calc_func" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>some_func</strong> – </li>
+<li><strong>args</strong> – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.process.parallel_compute">
+<code class="descname">parallel_compute</code><span class="sig-paren">(</span><em>data</em>, <em>func</em>, <em>cores=1</em>, <em>lengthy_computation=False</em>, <em>func_args=[]</em>, <em>func_kwargs={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/process.html#parallel_compute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.process.parallel_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the guess function using multiple cores</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Data to map function to. Function will be mapped to the first axis of data</li>
+<li><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.6)"><em>callable</em></a>) – Function to map to data</li>
+<li><strong>cores</strong> (<em>uint</em><em>, </em><em>optional</em>) – Number of logical cores to use to compute
+Default - 1 (serial computation)</li>
+<li><strong>lengthy_computation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether or not each computation is expected to take substantial time.
+Sometimes the time for adding more cores can outweigh the time per core
+Default - False</li>
+<li><strong>func_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – arguments to be passed to the function</li>
+<li><strong>func_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a><em>, </em><em>optional</em>) – keyword arguments to be passed onto function</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>results</strong> – List of computational results</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)">list</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pycroscopy.processing.process.setup_func">
+<code class="descname">setup_func</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycroscopy/processing/process.html#setup_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycroscopy.processing.process.setup_func" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pycroscopy.processing.svd_utils.html" class="btn btn-neutral float-right" title="pycroscopy.processing.svd_utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pycroscopy.processing.proc_utils.html" class="btn btn-neutral" title="pycroscopy.processing.proc_utils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Suhas Somnath, Chris Smith, Stephen Jesse, Numan Laanait.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.59.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

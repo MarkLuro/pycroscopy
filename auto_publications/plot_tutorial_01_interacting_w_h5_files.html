@@ -1,0 +1,973 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial 1: Interacting with Pycroscopy H5 files &mdash; pycroscopy 0.59.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="../about.html"/>
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="pycroscopy 0.59.2 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pycroscopy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.59.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">Pycroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new.html">What’s New</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_format.html">Pycroscopy Data and File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../papers_conferences.html">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Pycroscopy Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#developer-tutorials">Developer Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#pycroscopy-publications">Pycroscopy Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html#user-tutorials">User Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contact.html">Contact us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pycroscopy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial 1: Interacting with Pycroscopy H5 files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/auto_publications/plot_tutorial_01_interacting_w_h5_files.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial-1-interacting-with-pycroscopy-h5-files">
+<span id="sphx-glr-auto-publications-plot-tutorial-01-interacting-w-h5-files-py"></span><h1>Tutorial 1: Interacting with Pycroscopy H5 files<a class="headerlink" href="#tutorial-1-interacting-with-pycroscopy-h5-files" title="Permalink to this headline">¶</a></h1>
+<p>Suhas Somnath</p>
+<p>11/11/2017</p>
+<p>This set of tutorials will serve as examples for using and developing end-to-end workflows for pycroscopy.</p>
+<p>In this example, we will learn how to interact with pycroscopy formatted h5 files.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>We highly recommend reading about the pycroscopy data format - available in the docs.</p>
+<p>Pycroscopy uses a data-centric approach to data analysis and processing meaning that results from all data analysis and
+processing are written to the same h5 file that contains the recorded measurements. The Hierarchical Data Format (HDF5)
+allows data to be stored in multiple datasets in a tree-like manner. However, certain rules and considerations have
+been made in pycroscopy to ensure consistent and easy access to any data. pycroscopy.hdf_utils contains a lot of
+utility functions that simplify access to data and this tutorial provides an overview of many of the these functions</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># Warning package in case something goes wrong</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+<span class="c1"># Package for downloading online files:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This package is not part of anaconda and may need to be installed.</span>
+    <span class="kn">import</span> <span class="nn">wget</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;wget not found.  Will install with pip.&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">pip</span>
+    <span class="n">pip</span><span class="o">.</span><span class="n">main</span><span class="p">([</span><span class="s1">&#39;install&#39;</span><span class="p">,</span> <span class="s1">&#39;wget&#39;</span><span class="p">])</span>
+    <span class="kn">import</span> <span class="nn">wget</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pycroscopy</span> <span class="kn">as</span> <span class="nn">px</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">warn</span><span class="p">(</span><span class="s1">&#39;pycroscopy not found.  Will install with pip.&#39;</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">pip</span>
+    <span class="n">pip</span><span class="o">.</span><span class="n">main</span><span class="p">([</span><span class="s1">&#39;install&#39;</span><span class="p">,</span> <span class="s1">&#39;pycroscopy&#39;</span><span class="p">])</span>
+    <span class="kn">import</span> <span class="nn">pycroscopy</span> <span class="kn">as</span> <span class="nn">px</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Downloading the example file from the pycroscopy Github project</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/pycroscopy/pycroscopy/master/data/BEPS_small.h5&#39;</span>
+<span class="n">h5_path</span> <span class="o">=</span> <span class="s1">&#39;temp.h5&#39;</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">h5_path</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Working on:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">h5_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Working</span> <span class="n">on</span><span class="p">:</span>
+<span class="n">temp</span><span class="o">.</span><span class="n">h5</span>
+</pre></div>
+</div>
+<p>Pycroscopy uses the h5py python package to access the HDF5 files and its contents.
+Conventionally, the h5py package is used to create, read, write, and modify h5 files.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Open the file in read-only mode</span>
+<span class="n">h5_f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="c1"># We can also use the ioHDF5 class from Pycroscopy to open the file.  Note that you do need to close the</span>
+<span class="c1"># file in h5py before opening it again.</span>
+<span class="n">h5_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">hdf</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">ioHDF5</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
+<span class="n">h5_f</span> <span class="o">=</span> <span class="n">hdf</span><span class="o">.</span><span class="n">file</span>
+
+<span class="c1"># Here, h5_f is an active handle to the open file</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspect-the-contents-of-this-h5-data-file">
+<h2>Inspect the contents of this h5 data file<a class="headerlink" href="#inspect-the-contents-of-this-h5-data-file" title="Permalink to this headline">¶</a></h2>
+<p>The file contents are stored in a tree structure, just like files on a contemporary computer. The file contains
+datagroups (similar to file folders) and datasets (similar to spreadsheets).
+There are several datasets in the file and these store:</p>
+<ul class="simple">
+<li>The actual measurement collected from the experiment</li>
+<li>Spatial location on the sample where each measurement was collected</li>
+<li>Information to support and explain the spectral data collected at each location</li>
+<li>Since pycroscopy stores results from processing and analyses performed on the data in the same file, these
+datasets and datagroups are present as well</li>
+<li>Any other relevant ancillary information</li>
+</ul>
+<p>Soon after opening any file, it is often of interest to list the contents of the file. While one can use the open
+source software HDFViewer developed by the HDF organization, pycroscopy.hdf_utils also has a simply utility to
+quickly visualize all the datasets and datagroups within the file within python.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;Contents of the H5 file:&#39;</span><span class="p">)</span>
+<span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">print_tree</span><span class="p">(</span><span class="n">h5_f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Contents</span> <span class="n">of</span> <span class="n">the</span> <span class="n">H5</span> <span class="n">file</span><span class="p">:</span>
+<span class="o">/</span>
+<span class="n">Measurement_000</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Bin_FFT</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Bin_Frequencies</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Bin_Indices</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Bin_Step</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Bin_Wfm_Type</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Excitation_Waveform</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Noise_Floor</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Position_Indices</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Position_Values</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Fit</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Guess</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Spectroscopic_Indices</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Spectroscopic_Values</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_000</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_000</span><span class="o">/</span><span class="n">Bin_Frequencies</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_000</span><span class="o">/</span><span class="n">Mean_Spectrogram</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_000</span><span class="o">/</span><span class="n">Spectroscopic_Parameter</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_000</span><span class="o">/</span><span class="n">Step_Averaged_Response</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_001</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_001</span><span class="o">/</span><span class="n">Bin_Frequencies</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_001</span><span class="o">/</span><span class="n">Mean_Spectrogram</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_001</span><span class="o">/</span><span class="n">Spectroscopic_Parameter</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spatially_Averaged_Plot_Group_001</span><span class="o">/</span><span class="n">Step_Averaged_Response</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spectroscopic_Indices</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Spectroscopic_Values</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">UDVS</span>
+<span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">UDVS_Indices</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-datasets-and-datagroups">
+<h2>Accessing datasets and datagroups<a class="headerlink" href="#accessing-datasets-and-datagroups" title="Permalink to this headline">¶</a></h2>
+<p>There are numerous ways to access datasets and datagroups in H5 files. First we show the methods using native h5py
+functionality.</p>
+<p>Datasets and datagroups can be accessed by specifying the path, just like a web page or a file in a directory</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Selecting a datagroup by specifying the absolute path:</span>
+<span class="n">h5_meas_group</span> <span class="o">=</span> <span class="n">h5_f</span><span class="p">[</span><span class="s1">&#39;Measurement_000&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;h5_meas_group:&#39;</span><span class="p">,</span> <span class="n">h5_meas_group</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;h5_chan_group:&#39;</span><span class="p">,</span> <span class="n">h5_f</span><span class="p">[</span><span class="s1">&#39;Measurement_000/Channel_000&#39;</span><span class="p">])</span>
+
+<span class="c1"># Selecting a dataset by specifying the absolute path:</span>
+<span class="n">h5_fft</span> <span class="o">=</span> <span class="n">h5_f</span><span class="p">[</span><span class="s1">&#39;Measurement_000/Channel_000/Bin_FFT&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;h5_fft:&#39;</span><span class="p">,</span> <span class="n">h5_fft</span><span class="p">)</span>
+
+<span class="c1"># Selecting the same dataset using the relative path.</span>
+<span class="c1"># First we get &quot;Channel_000&quot; from h5_meas_group:</span>
+<span class="n">h5_group</span> <span class="o">=</span> <span class="n">h5_meas_group</span><span class="p">[</span><span class="s1">&#39;Channel_000&#39;</span><span class="p">]</span>
+
+<span class="c1"># Now we access Bin_FFT from within h5_group:</span>
+<span class="n">h5_fft</span> <span class="o">=</span> <span class="n">h5_group</span><span class="p">[</span><span class="s1">&#39;Bin_FFT&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;h5_fft:&#39;</span><span class="p">,</span> <span class="n">h5_fft</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">h5_meas_group</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">group</span> <span class="s2">&quot;/Measurement_000&quot;</span> <span class="p">(</span><span class="mi">1</span> <span class="n">members</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="n">h5_chan_group</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">group</span> <span class="s2">&quot;/Measurement_000/Channel_000&quot;</span> <span class="p">(</span><span class="mi">17</span> <span class="n">members</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="n">h5_fft</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Bin_FFT&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">87</span><span class="p">,),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;c8&quot;</span><span class="o">&gt;</span>
+<span class="n">h5_fft</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Bin_FFT&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">87</span><span class="p">,),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;c8&quot;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The datagroup “Channel_000” contains several “members”, where these members could be datasets like “Bin_FFT” or
+datagroups like “Channel_000”</p>
+<p>The output above shows that the “Bin_FFT” dataset is a one dimensional dataset, and has complex value (a +bi)
+entries at each element in the 1D array.
+This dataset is contained in a datagroup called “Channel_000” which itself is contained in a datagroup called
+“Measurement_000”</p>
+<p>And here’s two methods using pycroscopy.hdf_utils</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Specific match of dataset name:</span>
+<span class="n">udvs_dsets_1</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getDataSet</span><span class="p">(</span><span class="n">h5_f</span><span class="p">,</span> <span class="s1">&#39;UDVS&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">udvs_dsets_1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+<span class="c1"># This function returns all datasets that match even a portion of the name</span>
+<span class="n">udvs_dsets_2</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">findDataset</span><span class="p">(</span><span class="n">h5_f</span><span class="p">,</span> <span class="s1">&#39;UDVS&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">udvs_dsets_2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;UDVS&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;f4&quot;</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="s1">&#39;Measurement_000/Channel_000/UDVS&#39;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;UDVS&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;f4&quot;</span><span class="o">&gt;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;Measurement_000/Channel_000/UDVS_Indices&#39;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;UDVS_Indices&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">22272</span><span class="p">,),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;u8&quot;</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Pycroscopy hdf5 files contain three kinds of datasets:</p>
+<ul class="simple">
+<li>Main datasets that contain data recorded / computed at multiple spatial locations.</li>
+<li>Ancillary datasets that support a main dataset</li>
+<li>Other datasets</li>
+</ul>
+<p>For more information, please refer to the documentation on the pycroscopy data format.</p>
+<p>We can check which datasets within h5_group are Main datasets using a handy hdf_utils function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">dset_name</span> <span class="ow">in</span> <span class="n">h5_group</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">checkIfMain</span><span class="p">(</span><span class="n">h5_group</span><span class="p">[</span><span class="n">dset_name</span><span class="p">]),</span> <span class="s1">&#39;:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dset_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="kc">False</span> <span class="p">:</span>  <span class="n">Bin_FFT</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Bin_Frequencies</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Bin_Indices</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Bin_Step</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Bin_Wfm_Type</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Excitation_Waveform</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Noise_Floor</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Position_Indices</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Position_Values</span>
+<span class="kc">True</span> <span class="p">:</span>   <span class="n">Raw_Data</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Spatially_Averaged_Plot_Group_000</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Spatially_Averaged_Plot_Group_001</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Spectroscopic_Indices</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">Spectroscopic_Values</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">UDVS</span>
+<span class="kc">False</span> <span class="p">:</span>  <span class="n">UDVS_Indices</span>
+</pre></div>
+</div>
+<p>The data of interest is almost always contained within Main Datasets. Thus, while all three kinds of datasets can
+be accessed using the methods shown above, we have a function in hdf_utils that allows us to only list the main
+datasets within the file / group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">main_dsets</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_all_main</span><span class="p">(</span><span class="n">h5_f</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">dset</span> <span class="ow">in</span> <span class="n">main_dsets</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dset</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">dset</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">22272</span><span class="p">)</span>
+<span class="o">/</span><span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Fit</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="o">/</span><span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span><span class="o">-</span><span class="n">SHO_Fit_000</span><span class="o">/</span><span class="n">Guess</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The datasets above show that the file contains three main datasets. Two of these datasets are contained in a folder
+called Raw_Data-SHO_Fit_000 meaning that they are results of an operation called SHO_Fit performed on the main
+dataset Raw_Data. The first of the three main datasets is indeed the Raw_Data dataset from which the latter
+two datasets (Fit and Guess) were derived.</p>
+<p>Pycroscopy allows the same operation, such as ‘SHO_Fit’, to be performed on the same dataset (Raw_Data), multiple
+times. Each time the operation is performed, a new datagroup is created to hold the new results. Often, we may
+want to perform a few operations such as:</p>
+<ul class="simple">
+<li>Find the (source / main) dataset from which certain results were derived</li>
+<li>Check if a particular operation was performed on a main dataset</li>
+<li>Find all datagroups corresponding to a particular operation (e.g. - SHO_Fit) being applied to a main dataset</li>
+</ul>
+<p>hdf_utils has a few handy functions that simply many of these use cases:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># First get the dataset corresponding to Raw_Data</span>
+<span class="n">h5_raw</span> <span class="o">=</span> <span class="n">h5_f</span><span class="p">[</span><span class="s1">&#39;/Measurement_000/Channel_000/Raw_Data&#39;</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Instances of operation &quot;{}&quot; applied to dataset named &quot;{}&quot;:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;SHO_Fit&#39;</span><span class="p">,</span> <span class="n">h5_raw</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="n">h5_sho_group_list</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">findH5group</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="s1">&#39;SHO_Fit&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h5_sho_group_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Instances</span> <span class="n">of</span> <span class="n">operation</span> <span class="s2">&quot;SHO_Fit&quot;</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">dataset</span> <span class="n">named</span> <span class="s2">&quot;/Measurement_000/Channel_000/Raw_Data&quot;</span><span class="p">:</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">group</span> <span class="s2">&quot;/Measurement_000/Channel_000/Raw_Data-SHO_Fit_000&quot;</span> <span class="p">(</span><span class="mi">4</span> <span class="n">members</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>As expected, the SHO_Fit operation was performed on Raw_Data only once, which is why findH5group returned only one
+datagroup - SHO_Fit_000.</p>
+<p>Often one may want to check if a certain operation was performed on a dataset with the very same parameters to
+avoid recomputing the results. hdf_utils has a function for this too:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;Parameters already used for computing SHO_Fit on Raw_Data in the file:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">h5_f</span><span class="p">[</span><span class="s1">&#39;/Measurement_000/Channel_000/Raw_Data-SHO_Fit_000&#39;</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Checking to see if SHO Fits have been computed on the raw dataset:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Using pycroscopy&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">check_for_old</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="s1">&#39;SHO_Fit&#39;</span><span class="p">,</span>
+                                 <span class="n">new_parms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;SHO_fit_method&#39;</span><span class="p">:</span> <span class="s1">&#39;pycroscopy BESHO&#39;</span><span class="p">}))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Using BEAM&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">check_for_old</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="s1">&#39;SHO_Fit&#39;</span><span class="p">,</span>
+                                 <span class="n">new_parms</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;SHO_fit_method&#39;</span><span class="p">:</span> <span class="s1">&#39;BEAM BESHO&#39;</span><span class="p">}))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Parameters</span> <span class="n">already</span> <span class="n">used</span> <span class="k">for</span> <span class="n">computing</span> <span class="n">SHO_Fit</span> <span class="n">on</span> <span class="n">Raw_Data</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">file</span><span class="p">:</span>
+<span class="p">{</span><span class="s1">&#39;SHO_guess_method&#39;</span><span class="p">:</span> <span class="s1">&#39;pycroscopy BESHO&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="s1">&#39;2017_08_22-15_02_08&#39;</span><span class="p">,</span> <span class="s1">&#39;machine_id&#39;</span><span class="p">:</span> <span class="s1">&#39;mac109728.ornl.gov&#39;</span><span class="p">,</span> <span class="s1">&#39;SHO_fit_method&#39;</span><span class="p">:</span> <span class="s1">&#39;pycroscopy BESHO&#39;</span><span class="p">}</span>
+
+<span class="n">Checking</span> <span class="n">to</span> <span class="n">see</span> <span class="k">if</span> <span class="n">SHO</span> <span class="n">Fits</span> <span class="n">have</span> <span class="n">been</span> <span class="n">computed</span> <span class="n">on</span> <span class="n">the</span> <span class="n">raw</span> <span class="n">dataset</span><span class="p">:</span>
+<span class="n">Using</span> <span class="n">pycroscopy</span>
+<span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">group</span> <span class="s2">&quot;/Measurement_000/Channel_000/Raw_Data-SHO_Fit_000&quot;</span> <span class="p">(</span><span class="mi">4</span> <span class="n">members</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="n">Using</span> <span class="n">BEAM</span>
+<span class="kc">None</span>
+</pre></div>
+</div>
+<p>Clearly, while findH5group returned any and all groups corresponding to SHO_Fit being applied to Raw_Data,
+check_for_old only returned the group(s) where the operation was performed using the same parameters.</p>
+<p>Let’s consider the inverse scenario where we are interested in finding the source dataset from which the known
+result was derived:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">h5_sho_group</span> <span class="o">=</span> <span class="n">h5_sho_group_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Datagroup containing the SHO fits:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h5_sho_group</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Dataset on which the SHO Fit was computed:&#39;</span><span class="p">)</span>
+<span class="n">h5_source_dset</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_source_dataset</span><span class="p">(</span><span class="n">h5_sho_group</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h5_source_dset</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Datagroup</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">SHO</span> <span class="n">fits</span><span class="p">:</span>
+<span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">group</span> <span class="s2">&quot;/Measurement_000/Channel_000/Raw_Data-SHO_Fit_000&quot;</span> <span class="p">(</span><span class="mi">4</span> <span class="n">members</span><span class="p">)</span><span class="o">&gt;</span>
+
+<span class="n">Dataset</span> <span class="n">on</span> <span class="n">which</span> <span class="n">the</span> <span class="n">SHO</span> <span class="n">Fit</span> <span class="n">was</span> <span class="n">computed</span><span class="p">:</span>
+<span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Raw_Data&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">22272</span><span class="p">),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;c8&quot;</span><span class="o">&gt;</span>
+<span class="n">located</span> <span class="n">at</span><span class="p">:</span>
+<span class="o">/</span><span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span>
+<span class="n">Data</span> <span class="n">contains</span><span class="p">:</span>
+<span class="n">Unknown</span> <span class="n">quantity</span> <span class="p">(</span><span class="n">unknown</span> <span class="n">units</span><span class="p">)</span>
+<span class="n">Data</span> <span class="n">dimensions</span> <span class="ow">and</span> <span class="n">original</span> <span class="n">shape</span><span class="p">:</span>
+<span class="n">Position</span> <span class="n">Dimensions</span><span class="p">:</span>
+<span class="n">X</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">5</span>
+<span class="n">Y</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">5</span>
+<span class="n">Spectroscopic</span> <span class="n">Dimensions</span><span class="p">:</span>
+<span class="n">Frequency</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">87</span>
+<span class="n">DC_Offset</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">64</span>
+<span class="n">Field</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Cycle</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-attributes">
+<h2>Accessing Attributes:<a class="headerlink" href="#accessing-attributes" title="Permalink to this headline">¶</a></h2>
+<p>HDF5 datasets and datagroups can also store metadata such as experimental parameters. These metadata can be text,
+numbers, small lists of numbers or text etc. These metadata can be very important for understanding the datasets
+and guide the analysis routines.</p>
+<p>h5py offers a basic method for accessing attributes attached to datasets and datagroups. However, more complicated
+operations such as accessing multiple attributes or accessing the original string value of string attributes can
+be problematic in python 3. pycroscopy.hdf_utils has a few functions that simplifies the process of accessing
+attributes</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Listing all attributes using get_attributes:</span>
+<span class="n">attr_dict</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="p">,</span> <span class="n">attr_names</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">att_name</span> <span class="ow">in</span> <span class="n">attr_dict</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;{} : {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">att_name</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">[</span><span class="n">att_name</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">IO_DAQ_platform</span> <span class="p">:</span> <span class="n">NI</span> <span class="mi">6115</span>
+<span class="n">grid_measuring</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">BE_amplitude_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mf">1.5</span>
+<span class="n">grid_</span><span class="o">/</span><span class="n">single</span> <span class="p">:</span> <span class="n">grid</span>
+<span class="n">BE_auto_smoothing</span> <span class="p">:</span> <span class="n">auto</span> <span class="n">smoothing</span> <span class="n">on</span>
+<span class="n">VS_cycle_phase_shift</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">VS_steps_per_full_cycle</span> <span class="p">:</span> <span class="mi">64</span>
+<span class="n">IO_Analog_Input_1</span> <span class="p">:</span> <span class="o">+/-</span> <span class="o">.</span><span class="mi">1</span><span class="n">V</span><span class="p">,</span> <span class="n">FFT</span>
+<span class="n">File_date_and_time</span> <span class="p">:</span> <span class="mi">26</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mi">2015</span> <span class="mi">14</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mi">48</span>
+<span class="n">BE_phase_content</span> <span class="p">:</span> <span class="n">chirp</span><span class="o">-</span><span class="n">sinc</span> <span class="n">hybrid</span>
+<span class="n">FORC_V_high2_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="n">BE_actual_duration_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.004</span>
+<span class="n">grid_contact_set_point_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.75</span>
+<span class="n">IO_Analog_Input_4</span> <span class="p">:</span> <span class="n">off</span>
+<span class="n">grid_transit_set_point_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">num_pix</span> <span class="p">:</span> <span class="mi">25</span>
+<span class="n">grid_num_cols</span> <span class="p">:</span> <span class="mi">5</span>
+<span class="n">IO_Analog_Input_3</span> <span class="p">:</span> <span class="n">off</span>
+<span class="n">num_udvs_steps</span> <span class="p">:</span> <span class="mi">256</span>
+<span class="n">FORC_num_of_FORC_cycles</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">BE_bins_per_band</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">FORC_num_of_FORC_repeats</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">BE_points_per_BE_wave</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">BE_phase_variation</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">BE_desired_duration_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.004</span>
+<span class="n">IO_Analog_Input_2</span> <span class="p">:</span> <span class="n">off</span>
+<span class="n">VS_mode</span> <span class="p">:</span> <span class="n">DC</span> <span class="n">modulation</span> <span class="n">mode</span>
+<span class="n">grid_current_col</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">IO_rate_</span><span class="p">[</span><span class="n">Hz</span><span class="p">]</span> <span class="p">:</span> <span class="mi">2000000</span>
+<span class="n">grid_num_rows</span> <span class="p">:</span> <span class="mi">5</span>
+<span class="n">FORC_V_low2_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="o">-</span><span class="mi">10</span>
+<span class="n">grid_current_row</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">grid_transit_time_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.1</span>
+<span class="n">BE_band_edge_smoothing_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">2560.5</span>
+<span class="n">grid_cycle_time_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="n">IO_AO_range_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="o">+/-</span> <span class="mi">10</span>
+<span class="n">IO_AO_amplifier</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">grid_total_time_</span><span class="p">[</span><span class="n">h</span><span class="p">;</span><span class="n">m</span><span class="p">;</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="n">data_type</span> <span class="p">:</span> <span class="n">BEPSData</span>
+<span class="n">BE_band_edge_trim</span> <span class="p">:</span> <span class="mf">0.14614</span>
+<span class="n">VS_step_edge_smoothing_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.001</span>
+<span class="n">BE_repeats</span> <span class="p">:</span> <span class="mi">2</span>
+<span class="n">File_file_name</span> <span class="p">:</span> <span class="n">in_out_BEPS_5x5</span>
+<span class="n">VS_offset_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">VS_set_pulse_duration</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.002</span>
+<span class="n">BE_center_frequency_</span><span class="p">[</span><span class="n">Hz</span><span class="p">]</span> <span class="p">:</span> <span class="mi">385000</span>
+<span class="n">File_file_suffix</span> <span class="p">:</span> <span class="mi">3</span>
+<span class="n">grid_time_remaining_</span><span class="p">[</span><span class="n">h</span><span class="p">;</span><span class="n">m</span><span class="p">;</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mi">10</span>
+<span class="n">VS_number_of_cycles</span> <span class="p">:</span> <span class="mi">2</span>
+<span class="n">FORC_V_high1_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">1</span>
+<span class="n">grid_settle_time_</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="p">:</span> <span class="mf">0.05</span>
+<span class="n">num_bins</span> <span class="p">:</span> <span class="mi">22272</span>
+<span class="n">grid_moving</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">BE_band_width_</span><span class="p">[</span><span class="n">Hz</span><span class="p">]</span> <span class="p">:</span> <span class="mi">60000</span>
+<span class="n">File_file_path</span> <span class="p">:</span> <span class="n">V</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">Sangmo</span>\<span class="n">KTaO3</span>\<span class="mi">150226</span>\<span class="n">onSTO650</span>\
+<span class="n">FORC_V_low1_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">VS_amplitude_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">8</span>
+<span class="n">File_MDAQ_version</span> <span class="p">:</span> <span class="n">MDAQ_VS_111114_01</span>
+<span class="n">VS_cycle_fraction</span> <span class="p">:</span> <span class="n">full</span>
+<span class="n">VS_read_voltage_</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">VS_set_pulse_amplitude</span><span class="p">[</span><span class="n">V</span><span class="p">]</span> <span class="p">:</span> <span class="mi">0</span>
+<span class="n">VS_measure_in_field_loops</span> <span class="p">:</span> <span class="ow">in</span> <span class="ow">and</span> <span class="n">out</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">field</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># accessing specific attributes only:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="p">,</span> <span class="n">attr_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VS_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;BE_phase_content&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;VS_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;DC modulation mode&#39;</span><span class="p">,</span> <span class="s1">&#39;BE_phase_content&#39;</span><span class="p">:</span> <span class="s1">&#39;chirp-sinc hybrid&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Comparing the number value of attributes is not a problem using h5py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># via the standard h5py library:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;VS_amplitude_[V]&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;VS_amplitude_[V]&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="mi">8</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+<p>However, accessing string valued attributes and using them for comparison is a problem using the standard h5py
+library</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;VS_measure_in_field_loops&#39;</span><span class="p">])</span>
+
+<span class="c1"># comparing the (byte)string value of attributes is a problem with python 3:</span>
+<span class="n">h5_meas_group</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;VS_measure_in_field_loops&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;in and out-of-field&#39;</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="sa">b</span><span class="s1">&#39;in and out-of-field&#39;</span>
+</pre></div>
+</div>
+<p>the get_attr function in hdf_utils handles such string complications by itself:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">str_val</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_attr</span><span class="p">(</span><span class="n">h5_meas_group</span><span class="p">,</span> <span class="s1">&#39;VS_measure_in_field_loops&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">str_val</span> <span class="o">==</span> <span class="s1">&#39;in and out-of-field&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="main-datasets-via-pycrodataset">
+<h2>Main Datasets via PycroDataset<a class="headerlink" href="#main-datasets-via-pycrodataset" title="Permalink to this headline">¶</a></h2>
+<p>For this example, we will be working with a Band Excitation Polarization Switching (BEPS) dataset acquired from
+advanced atomic force microscopes. In the much simpler Band Excitation (BE) imaging datasets, a single spectra is
+acquired at each location in a two dimensional grid of spatial locations. Thus, BE imaging datasets have two
+position dimensions (X, Y) and one spectroscopic dimension (frequency - against which the spectra is recorded).
+The BEPS dataset used in this example has a spectra for each combination of three other parameters (DC offset,
+Field, and Cycle). Thus, this dataset has three new spectral dimensions in addition to the spectra itself. Hence,
+this dataset becomes a 2+4 = 6 dimensional dataset</p>
+<p>In pycroscopy, all spatial dimensions are collapsed to a single dimension and similarly, all spectroscopic
+dimensions are also collapsed to a single dimension. Thus, the data is stored as a two-dimensional (N x P)
+matrix with N spatial locations each with P spectroscopic datapoints.</p>
+<p>This general and intuitive format allows imaging data from any instrument, measurement scheme, size, or
+dimensionality to be represented in the same way. Such an instrument independent data format enables a single
+set of analysis and processing functions to be reused for multiple image formats or modalities.</p>
+<p>Main datasets can be thought of as substantially more capable and information-packed than standard datasets
+since they have (or are linked to) all the necessary information to describe a measured dataset. The additional
+information contained / linked by Main datasets includes:</p>
+<ul class="simple">
+<li>the recorded physical quantity</li>
+<li>units of the data</li>
+<li>names of the position and spectroscopic dimensions</li>
+<li>dimensionality of the data in its original N dimensional form etc.</li>
+</ul>
+<p>While it is most certainly possible to access this information via the native h5py functionality, it can become
+tedious very quickly.  Pycroscopy’s PycroDataset class makes such necessary information and any necessary
+functionality easily accessible.</p>
+<p>PycroDataset objects are still h5py.Dataset objects underneath, like all datasets accessed above, but add an
+additional layer of functionality to simplify data operations. Let’s compare the information we can get via the
+standard h5py library with that from PycroDataset to see the additional layer of functionality. The PycroDataset
+makes the spectral and positional dimensions, sizes immediately apparent among other things.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Accessing the raw data</span>
+<span class="n">pycro_main</span> <span class="o">=</span> <span class="n">main_dsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Dataset as observed via h5py:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Dataset as seen via a PycroDataset object:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="p">)</span>
+<span class="c1"># Showing that the PycroDataset is still just a h5py.Dataset object underneath:</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">pycro_main</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">Dataset</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span> <span class="o">==</span> <span class="n">h5_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Dataset</span> <span class="k">as</span> <span class="n">observed</span> <span class="n">via</span> <span class="n">h5py</span><span class="p">:</span>
+
+
+<span class="n">Dataset</span> <span class="k">as</span> <span class="n">seen</span> <span class="n">via</span> <span class="n">a</span> <span class="n">PycroDataset</span> <span class="nb">object</span><span class="p">:</span>
+<span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Raw_Data&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">22272</span><span class="p">),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;c8&quot;</span><span class="o">&gt;</span>
+<span class="n">located</span> <span class="n">at</span><span class="p">:</span>
+<span class="o">/</span><span class="n">Measurement_000</span><span class="o">/</span><span class="n">Channel_000</span><span class="o">/</span><span class="n">Raw_Data</span>
+<span class="n">Data</span> <span class="n">contains</span><span class="p">:</span>
+<span class="n">Unknown</span> <span class="n">quantity</span> <span class="p">(</span><span class="n">unknown</span> <span class="n">units</span><span class="p">)</span>
+<span class="n">Data</span> <span class="n">dimensions</span> <span class="ow">and</span> <span class="n">original</span> <span class="n">shape</span><span class="p">:</span>
+<span class="n">Position</span> <span class="n">Dimensions</span><span class="p">:</span>
+<span class="n">X</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">5</span>
+<span class="n">Y</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">5</span>
+<span class="n">Spectroscopic</span> <span class="n">Dimensions</span><span class="p">:</span>
+<span class="n">Frequency</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">87</span>
+<span class="n">DC_Offset</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">64</span>
+<span class="n">Field</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Cycle</span> <span class="o">-</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span>
+
+<span class="kc">True</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+<p>Main datasets are often linked to supporting datasets in addition to the mandatory ancillary datasets.  The main
+dataset contains attributes which are references to these datasets</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">att_name</span> <span class="ow">in</span> <span class="n">pycro_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">att_name</span><span class="p">,</span> <span class="n">pycro_main</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">att_name</span><span class="p">])</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Excitation_Waveform</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Position_Indices</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Position_Values</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Spectroscopic_Indices</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">UDVS</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Bin_Step</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Bin_Indices</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">UDVS_Indices</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Bin_Frequencies</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Bin_FFT</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Bin_Wfm_Type</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">in_field_Plot_Group</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">region</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">out_of_field_Plot_Group</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">region</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Noise_Floor</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+<span class="n">Spectroscopic_Values</span> <span class="o">&lt;</span><span class="n">HDF5</span> <span class="nb">object</span> <span class="n">reference</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>These datasets can be accessed easily via a handy hdf_utils function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getAuxData</span><span class="p">(</span><span class="n">pycro_main</span><span class="p">,</span> <span class="n">auxDataName</span><span class="o">=</span><span class="s1">&#39;Bin_FFT&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Bin_FFT&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">87</span><span class="p">,),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;c8&quot;</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The additional functionality of PycroDataset is enabled through several functions in hdf_utils. Below, we provide
+several such examples along with comparisons with performing the same operations in a simpler manner using
+the PycroDataset object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># A function to describe the nature of the contents within a dataset</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_data_descriptor</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">))</span>
+
+<span class="c1"># this functionality can be accessed in PycroDatasets via:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">data_descriptor</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Unknown</span> <span class="n">quantity</span> <span class="p">(</span><span class="n">unknown</span> <span class="n">units</span><span class="p">)</span>
+<span class="n">Unknown</span> <span class="n">quantity</span> <span class="p">(</span><span class="n">unknown</span> <span class="n">units</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-ancillary-datasets">
+<h2>Using Ancillary Datasets<a class="headerlink" href="#using-ancillary-datasets" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned earlier, the ancillary datasets contain information about the dimensionality of the original
+N-dimensional dataset.  Here we see how we can extract the size and corresponding names of each of the spectral
+and position dimensions.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># We can use the getAuxData function again to get the ancillary datasets linked with the main dataset:</span>
+<span class="c1"># The [0] slicing is to take the one and only position indices and spectroscopic indices linked with the dataset</span>
+<span class="n">h5_pos_inds</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getAuxData</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="n">auxDataName</span><span class="o">=</span><span class="s1">&#39;Position_Indices&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">h5_spec_inds</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getAuxData</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="n">auxDataName</span><span class="o">=</span><span class="s1">&#39;Spectroscopic_Indices&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Need to state that the array needs to be of the spectral shape.</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectroscopic dimensions:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_formatted_labels</span><span class="p">(</span><span class="n">h5_spec_inds</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Size of each dimension:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_dimensionality</span><span class="p">(</span><span class="n">h5_spec_inds</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Position dimensions:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_formatted_labels</span><span class="p">(</span><span class="n">h5_pos_inds</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Size of each dimension:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_dimensionality</span><span class="p">(</span><span class="n">h5_pos_inds</span><span class="p">[()]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Spectroscopic</span> <span class="n">dimensions</span><span class="p">:</span>
+<span class="p">[</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="s1">&#39;DC_Offset (V)&#39;</span><span class="p">,</span> <span class="s1">&#39;Field ()&#39;</span><span class="p">,</span> <span class="s1">&#39;Cycle ()&#39;</span><span class="p">]</span>
+<span class="n">Size</span> <span class="n">of</span> <span class="n">each</span> <span class="n">dimension</span><span class="p">:</span>
+<span class="p">[</span><span class="mi">87</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">Position</span> <span class="n">dimensions</span><span class="p">:</span>
+<span class="p">[</span><span class="s1">&#39;X (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Y (m)&#39;</span><span class="p">]</span>
+<span class="n">Size</span> <span class="n">of</span> <span class="n">each</span> <span class="n">dimension</span><span class="p">:</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The same tasks can very easily be accomplished via the PycroDataset object</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># an alternate way to get the spectroscopic indices is simply via:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">h5_spec_inds</span><span class="p">)</span>
+
+<span class="c1"># We can get the spectral / position labels and dimensions easily via:</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectroscopic dimensions:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">spec_dim_descriptors</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Size of each dimension:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">spec_dim_sizes</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Position dimensions:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">pos_dim_descriptors</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Size of each dimension:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">pos_dim_sizes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">HDF5</span> <span class="n">dataset</span> <span class="s2">&quot;Spectroscopic_Indices&quot;</span><span class="p">:</span> <span class="n">shape</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">22272</span><span class="p">),</span> <span class="nb">type</span> <span class="s2">&quot;&lt;i4&quot;</span><span class="o">&gt;</span>
+<span class="n">Spectroscopic</span> <span class="n">dimensions</span><span class="p">:</span>
+<span class="p">[</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="s1">&#39;DC_Offset (V)&#39;</span><span class="p">,</span> <span class="s1">&#39;Field ()&#39;</span><span class="p">,</span> <span class="s1">&#39;Cycle ()&#39;</span><span class="p">]</span>
+<span class="n">Size</span> <span class="n">of</span> <span class="n">each</span> <span class="n">dimension</span><span class="p">:</span>
+<span class="p">[</span><span class="mi">87</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">Position</span> <span class="n">dimensions</span><span class="p">:</span>
+<span class="p">[</span><span class="s1">&#39;X (m)&#39;</span><span class="p">,</span> <span class="s1">&#39;Y (m)&#39;</span><span class="p">]</span>
+<span class="n">Size</span> <span class="n">of</span> <span class="n">each</span> <span class="n">dimension</span><span class="p">:</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>In a few cases, the spectroscopic / position dimensions are not arranged in descending order of rate of change.
+In other words, the dimensions in these ancillary matrices are not arranged from fastest-varying to slowest.
+To account for such discrepancies, hdf_utils has a very handy function that goes through each of the columns or
+rows in the ancillary indices matrices and finds the order in which these dimensions vary.</p>
+<p>Below we illustrate an example of sorting the names of the spectroscopic dimensions from fastest to slowest in
+a BEPS data file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">spec_sort_order</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_sort_order</span><span class="p">(</span><span class="n">h5_spec_inds</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectroscopic dimensions arranged as is:&#39;</span><span class="p">)</span>
+<span class="n">unsorted_spec_labels</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_formatted_labels</span><span class="p">(</span><span class="n">h5_spec_inds</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">unsorted_spec_labels</span><span class="p">)</span>
+<span class="n">sorted_spec_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">unsorted_spec_labels</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spec_sort_order</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Spectroscopic dimensions arranged from fastest to slowest&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sorted_spec_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Spectroscopic</span> <span class="n">dimensions</span> <span class="n">arranged</span> <span class="k">as</span> <span class="ow">is</span><span class="p">:</span>
+<span class="p">[</span><span class="s1">&#39;Frequency (Hz)&#39;</span><span class="p">,</span> <span class="s1">&#39;DC_Offset (V)&#39;</span><span class="p">,</span> <span class="s1">&#39;Field ()&#39;</span><span class="p">,</span> <span class="s1">&#39;Cycle ()&#39;</span><span class="p">]</span>
+<span class="n">Spectroscopic</span> <span class="n">dimensions</span> <span class="n">arranged</span> <span class="kn">from</span> <span class="nn">fastest</span> <span class="n">to</span> <span class="n">slowest</span>
+<span class="p">[</span><span class="s1">&#39;Frequency (Hz)&#39;</span> <span class="s1">&#39;Field ()&#39;</span> <span class="s1">&#39;DC_Offset (V)&#39;</span> <span class="s1">&#39;Cycle ()&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>When visualizing the data it is essential to plot the data against appropriate values on the X, Y, Z axes.
+Extracting a simple list or array of values to plot against may be challenging especially for multidimensional
+dataset such as the one under consideration. Fortunately, hdf_utils has a very handy function for this as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">h5_spec_inds</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getAuxData</span><span class="p">(</span><span class="n">pycro_main</span><span class="p">,</span> <span class="n">auxDataName</span><span class="o">=</span><span class="s1">&#39;Spectroscopic_Indices&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">h5_spec_vals</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">getAuxData</span><span class="p">(</span><span class="n">pycro_main</span><span class="p">,</span> <span class="n">auxDataName</span><span class="o">=</span><span class="s1">&#39;Spectroscopic_Values&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dimension_name</span> <span class="o">=</span> <span class="s1">&#39;DC_Offset&#39;</span>
+<span class="n">dc_dict</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">get_unit_values</span><span class="p">(</span><span class="n">h5_spec_inds</span><span class="p">,</span> <span class="n">h5_spec_vals</span><span class="p">,</span> <span class="n">dim_names</span><span class="o">=</span><span class="n">dimension_name</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">dc_dict</span><span class="p">)</span>
+<span class="n">dc_val</span> <span class="o">=</span> <span class="n">dc_dict</span><span class="p">[</span><span class="n">dimension_name</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dc_val</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">dimension_name</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Points in dimension&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_tutorial_01_interacting_w_h5_files_0011.png" class="align-center" src="../_images/sphx_glr_plot_tutorial_01_interacting_w_h5_files_0011.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;DC_Offset&#39;</span><span class="p">:</span> <span class="n">array</span><span class="p">([</span> <span class="mf">0.</span> <span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">1.5</span><span class="p">,</span>  <span class="mf">2.</span> <span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">3.</span> <span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">4.</span> <span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">5.</span> <span class="p">,</span>
+        <span class="mf">5.5</span><span class="p">,</span>  <span class="mf">6.</span> <span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">7.</span> <span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">8.</span> <span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">7.</span> <span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">6.</span> <span class="p">,</span>  <span class="mf">5.5</span><span class="p">,</span>
+        <span class="mf">5.</span> <span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">4.</span> <span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">3.</span> <span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">2.</span> <span class="p">,</span>  <span class="mf">1.5</span><span class="p">,</span>  <span class="mf">1.</span> <span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.</span> <span class="p">,</span>
+       <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">4.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">5.5</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">6.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">6.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">8.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">7.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">7.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">6.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">5.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.</span> <span class="p">,</span>
+       <span class="o">-</span><span class="mf">4.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">3.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p>Yet again, this process is simpler when using the PycroDataset object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dv_val</span> <span class="o">=</span> <span class="n">pycro_main</span><span class="o">.</span><span class="n">get_spec_values</span><span class="p">(</span><span class="n">dim_name</span><span class="o">=</span><span class="n">dimension_name</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dc_val</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">dimension_name</span><span class="p">)</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Points in dimension&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../_images/sphx_glr_plot_tutorial_01_interacting_w_h5_files_0021.png" class="align-center" src="../_images/sphx_glr_plot_tutorial_01_interacting_w_h5_files_0021.png" />
+</div>
+<div class="section" id="reshaping-data">
+<h2>Reshaping Data<a class="headerlink" href="#reshaping-data" title="Permalink to this headline">¶</a></h2>
+<p>Pycroscopy stores N dimensional datasets in a flattened 2D form of position x spectral values. It can become
+challenging to retrieve the data in its original N-dimensional form, especially for multidimensional datasets
+such as the one we are working on. Fortunately, all the information regarding the dimensionality of the dataset
+are contained in the spectral and position ancillary datasets. hdf_utils has a very useful function that can
+help retrieve the N-dimensional form of the data using a simple function call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ndim_form</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">reshape_to_Ndims</span><span class="p">(</span><span class="n">h5_raw</span><span class="p">,</span> <span class="n">get_labels</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Succeeded in reshaping flattened 2D dataset to N dimensions&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Shape of the data in its original 2D form&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">h5_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Shape of the N dimensional form of the dataset:&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">ndim_form</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;And these are the dimensions&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Failed in reshaping the dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Succeeded</span> <span class="ow">in</span> <span class="n">reshaping</span> <span class="n">flattened</span> <span class="mi">2</span><span class="n">D</span> <span class="n">dataset</span> <span class="n">to</span> <span class="n">N</span> <span class="n">dimensions</span>
+<span class="n">Shape</span> <span class="n">of</span> <span class="n">the</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">its</span> <span class="n">original</span> <span class="mi">2</span><span class="n">D</span> <span class="n">form</span>
+<span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">22272</span><span class="p">)</span>
+<span class="n">Shape</span> <span class="n">of</span> <span class="n">the</span> <span class="n">N</span> <span class="n">dimensional</span> <span class="n">form</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dataset</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">And</span> <span class="n">these</span> <span class="n">are</span> <span class="n">the</span> <span class="n">dimensions</span>
+<span class="p">[</span><span class="s1">&#39;X&#39;</span> <span class="s1">&#39;Y&#39;</span> <span class="s1">&#39;Frequency&#39;</span> <span class="s1">&#39;DC_Offset&#39;</span> <span class="s1">&#39;Field&#39;</span> <span class="s1">&#39;Cycle&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The whole process is simplified further when using the PycroDataset object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ndim_form</span> <span class="o">=</span> <span class="n">pycro_main</span><span class="o">.</span><span class="n">get_n_dim_form</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Shape of the N dimensional form of the dataset:&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ndim_form</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;And these are the dimensions&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pycro_main</span><span class="o">.</span><span class="n">n_dim_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Shape</span> <span class="n">of</span> <span class="n">the</span> <span class="n">N</span> <span class="n">dimensional</span> <span class="n">form</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dataset</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">And</span> <span class="n">these</span> <span class="n">are</span> <span class="n">the</span> <span class="n">dimensions</span>
+<span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;DC_Offset&#39;</span><span class="p">,</span> <span class="s1">&#39;Field&#39;</span><span class="p">,</span> <span class="s1">&#39;Cycle&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">two_dim_form</span><span class="p">,</span> <span class="n">success</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">hdf_utils</span><span class="o">.</span><span class="n">reshape_from_Ndims</span><span class="p">(</span><span class="n">ndim_form</span><span class="p">,</span>
+                                                        <span class="n">h5_pos</span><span class="o">=</span><span class="n">h5_pos_inds</span><span class="p">,</span>
+                                                        <span class="n">h5_spec</span><span class="o">=</span><span class="n">h5_spec_inds</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Shape of flattened two dimensional form&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">two_dim_form</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Failed in flattening the N dimensional dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-default"><div class="highlight"><pre><span></span><span class="n">Shape</span> <span class="n">of</span> <span class="n">flattened</span> <span class="n">two</span> <span class="n">dimensional</span> <span class="n">form</span>
+<span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">22272</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Close and delete the h5_file</span>
+<span class="n">h5_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.716 seconds)</p>
+<div class="sphx-glr-footer docutils container">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_tutorial_01_interacting_w_h5_files1.py" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_tutorial_01_interacting_w_h5_files.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" href="../_downloads/plot_tutorial_01_interacting_w_h5_files1.ipynb" download=""><code class="xref download docutils literal"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_01_interacting_w_h5_files.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Suhas Somnath, Chris Smith, Stephen Jesse, Numan Laanait.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.59.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
